@@ -1,0 +1,7 @@
+# required
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python3 python3-pip git vim nano slic3r
+
+# optional
+sudo apt install bpytop neofetch
