@@ -25,4 +25,4 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() == 'obj'
 
 if __name__ == '__main__':
-    app.run(host='192.168.45.42', port=5000)
+    app.run(host='0.0.0.0', port=8285)
