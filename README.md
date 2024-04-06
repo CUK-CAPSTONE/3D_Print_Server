@@ -10,4 +10,5 @@
 curl -X POST -F file=@<경로>/<파일 이름>.obj http://175.114.206.21:5000/upload
 ```
 
-[라즈베리파이 플라스크 서버 개설](https://youtu.be/lItCyPfJj5E?si=fEXwU-q4Ix82Nmqh)
+# 작업 현황 youtube
+- [라즈베리파이 플라스크 서버 개설](https://youtu.be/lItCyPfJj5E?si=fEXwU-q4Ix82Nmqh)
