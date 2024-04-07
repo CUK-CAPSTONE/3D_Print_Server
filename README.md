@@ -13,6 +13,8 @@ curl -X POST -F file=@<경로>/<파일 이름>.obj http://175.114.206.21:5000/up
 
 ### obj to gcode 사용법
 
+해당 내용은 ```./src/obj2gcode.sh``` 에 구현되어있음.
+
 기본적으로 slicsr 설치되어있어야함
 ```bahs
 sudo apt-get update
@@ -23,17 +25,6 @@ sudo apt-get install slic3r
 
 ```bash
 slic3r /home/pi/3D_Print_Server/obj/untitled.obj --output /home/pi/3D_Print_Server/gcode/untitled.gcode
-```
-
-### command Line으로 octoprint 제어
-
-기본적으로 octoprint는 restAPI로 작동
-
-아래 코드는 octoprint 서버에 gcode 파일 업로드 후 출력하는 명령어임
-
-```bash
-curl -X POST -H "X-Api-Key: your_api_key_here" -F "file=@/home/pi/untitled.gcode" "http://localhost/api/files/local"
-curl -X POST -H "X-Api-Key: your_api_key_here" -d "command=select&print=true" "http://localhost/api/files/local/untitled.gcode"
 ```
 
 
