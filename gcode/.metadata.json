@@ -1,0 +1,39 @@
+{
+  "untitled.gcode": {
+    "analysis": {
+      "printingArea": {
+        "maxX": 107.625,
+        "maxY": 107.625,
+        "maxZ": 2.15,
+        "minX": 92.375,
+        "minY": 92.375,
+        "minZ": 0.0
+      },
+      "dimensions": {
+        "depth": 15.25,
+        "height": 2.15,
+        "width": 15.25
+      },
+      "travelArea": {
+        "maxX": 107.625,
+        "maxY": 107.625,
+        "maxZ": 5.0,
+        "minX": 0.0,
+        "minY": 0.0,
+        "minZ": 0.0
+      },
+      "travelDimensions": {
+        "depth": 107.625,
+        "height": 5.0,
+        "width": 107.625
+      },
+      "estimatedPrintTime": 9.939666287018511,
+      "filament": {
+        "tool0": {
+          "length": 2.3937500000000003,
+          "volume": 0.016920421682693778
+        }
+      }
+    }
+  }
+}
