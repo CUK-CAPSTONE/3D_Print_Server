@@ -30,3 +30,4 @@ slic3r /home/pi/3D_Print_Server/obj/untitled.obj --output /home/pi/3D_Print_Serv
 
 # 작업 현황 youtube
 - [라즈베리파이 플라스크 서버 개설](https://youtu.be/lItCyPfJj5E?si=fEXwU-q4Ix82Nmqh)
+- [옥토파이 자동화 완료](https://youtu.be/Mgajs9aa5u0)
