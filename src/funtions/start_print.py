@@ -12,14 +12,14 @@ BASE_URL = 'http://localhost:5000'
 # API 키를 헤더에 포함시킵니다.
 headers = {'X-Api-Key': API_KEY}
 
-# 출력할 G-code 파일 경로를 여기에 입력하세요.
-GCODE_FILE = '/home/pi/3D_Print_Server/gcode/untitled.gcode'
-
 # G-code 파일을 Octoprint에 업로드합니다.
-def upload_gcode_file():
+def upload_gcode_file(filename):
+    # 파일 경로를 생성합니다.
+    gcode_file = f'/home/pi/3D_Print_Server/gcode/{filename}.gcode'
+
     # 파일을 읽어 payload에 추가합니다.
-    with open(GCODE_FILE, 'rb') as f:
-        files = {'file': (os.path.basename(GCODE_FILE), f)}
+    with open(gcode_file, 'rb') as f:
+        files = {'file': (os.path.basename(gcode_file), f)}
         payload = {'select': 'true', 'print': 'false'}
 
         # POST 요청을 보냅니다.
@@ -67,18 +67,20 @@ def send_print_finished_request():
     else:
         print(f'출력 완료 요청을 전송하는 중 오류가 발생했습니다: {response.status_code}')
 
-# G-code 파일을 업로드합니다.
-upload_gcode_file()
+#! 함수 실행 부분 (가급적 main.py에서 사용해주세요)
+def print_Gcode(filename):
+    # G-code 파일을 업로드합니다.
+    upload_gcode_file(filename)
+    
+    # 프린터가 대기 상태가 될 때까지 기다립니다.
+    while not is_printer_operational():
+        pass
+    
+    # 프린팅을 시작합니다.
+    start_printing()
 
-# 프린터가 대기 상태가 될 때까지 기다립니다.
-while not is_printer_operational():
-    pass
+    while not is_print_finished():
+        pass
 
-# 프린팅을 시작합니다.
-start_printing()
-
-while not is_print_finished():
-    pass
-
-# 외부 서버로 출력 완료 요청을 보냅니다.
-send_print_finished_request()
+    # 외부 서버로 출력 완료 요청을 보냅니다.
+    send_print_finished_request()

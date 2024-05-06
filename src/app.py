@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from funtions.obj2gcode import *
+from funtions.start_print import *
 import os
 import requests
 
@@ -17,7 +18,7 @@ def upload_file():
         return jsonify({'error': 'Missing required fields'}), 400
 
     obj_url = data['obj_url']  # 'obj_url' 값을 추출합니다
-    phone = data['phone']  # 'phone' 값을 추출합니다
+    phone , FILE_NAME = data['phone']  # 'phone' 값을 추출합니다
 
     try:
         response = requests.get(obj_url)  # obj_url에서 파일을 다운로드합니다
@@ -32,9 +33,10 @@ def upload_file():
         file.write(response.content)  # 다운로드한 파일을 저장합니다
     
     # obj2gcode 함수를 호출하여 다운로드받은 obj파일을 gcode 파일로 변환해줍니다
-    obj2gcode(phone)
-
-    return jsonify({'message': 'File downloaded and saved successfully'}), 200  # 파일이 성공적으로 다운로드되고 저장되었음을 반환합니다
+    obj2gcode(FILE_NAME)
+    # print_Gcode(FILE_NAME)
+    
+    return jsonify({'message': 'success'}), 200  # 파일이 성공적으로 다운로드되고 저장되었음을 반환합니다
 
 if __name__ == '__main__':  # app.py가 직접 실행될 때만 실행됩니다
     app.run(host='0.0.0.0', port=5831)  # 서버를 실행합니다. 내부 포트는 5831로 설정합니다
