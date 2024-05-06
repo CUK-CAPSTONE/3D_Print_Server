@@ -1,3 +1,5 @@
+# 옥토프린트 연결이 정상적으로 되었는지 단순히 확인하는 스크립트입니다 
+
 import requests
 import os
 
