@@ -32,3 +32,4 @@ slic3r /home/pi/3D_Print_Server/obj/untitled.obj --output /home/pi/3D_Print_Serv
 - [라즈베리파이 플라스크 서버 개설](https://youtu.be/lItCyPfJj5E?si=fEXwU-q4Ix82Nmqh)
 - [옥토파이 자동화 완료](https://youtu.be/Mgajs9aa5u0)
 - [obj 파일 전송에서 json형태 전송으로 app.py 수정](https://youtu.be/phLm5U370LQ)
+- [obj2code , start 3D print 코드 함수화 후 app.py 에 적용](https://youtu.be/mlJmjgRVK-o)
