@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from funtions.obj2gcode import *
 import os
 import requests
 
@@ -29,6 +30,9 @@ def upload_file():
 
     with open(file_path, 'wb') as file:
         file.write(response.content)  # 다운로드한 파일을 저장합니다
+    
+    # obj2gcode 함수를 호출하여 다운로드받은 obj파일을 gcode 파일로 변환해줍니다
+    obj2gcode(phone)
 
     return jsonify({'message': 'File downloaded and saved successfully'}), 200  # 파일이 성공적으로 다운로드되고 저장되었음을 반환합니다
 
