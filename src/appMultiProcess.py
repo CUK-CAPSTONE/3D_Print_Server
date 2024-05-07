@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from funtions.obj2gcode import *
 from funtions.start_print import *
+from funtions.countSecond import *
 import os
 import requests
 from multiprocessing import Process, Queue
@@ -20,6 +21,7 @@ def process_file():
             # obj2gcode 함수를 호출하여 다운로드받은 obj파일을 gcode 파일로 변환해줍니다
             obj2gcode(FILE_NAME)
             # print_Gcode(FILE_NAME)
+            countSecond(10)
         except Exception as e:
             print(f"Error processing file {FILE_NAME}: {str(e)}")
         finally:
