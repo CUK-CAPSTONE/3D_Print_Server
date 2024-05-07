@@ -1,4 +1,5 @@
 import subprocess
+import time
 
 def obj2gcode(FILE_NAME):
     # 명령어를 문자열로 저장합니다.
@@ -7,6 +8,7 @@ def obj2gcode(FILE_NAME):
     try:
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         output, error = process.communicate(timeout=30)
+        time.sleep(60)
         print(output.decode())
     except subprocess.TimeoutExpired:
         print("명령어 실행이 30초 내에 완료되지 않았습니다.")

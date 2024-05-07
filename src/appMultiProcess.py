@@ -19,7 +19,7 @@ def process_file():
         try:
             # obj2gcode 함수를 호출하여 다운로드받은 obj파일을 gcode 파일로 변환해줍니다
             obj2gcode(FILE_NAME)
-            print_Gcode(FILE_NAME)
+            # print_Gcode(FILE_NAME)
         except Exception as e:
             print(f"Error processing file {FILE_NAME}: {str(e)}")
         finally:
@@ -30,29 +30,35 @@ def process_file():
 
 @app.route('/upload', methods=['POST'])  # POST 방식으로 /upload 경로에 접근하면 upload_file 함수를 실행합니다
 def upload_file():
-    data = request.get_json()  # JSON 데이터를 받습니다
-
-    if 'obj_url' not in data or 'phone' not in data:  # JSON 데이터에 'obj_url'이나 'phone'이 없으면 에러 메시지를 반환합니다
-        return jsonify({'error': 'failed : no url or phone'}), 400
-
-    obj_url = data['obj_url']  # 'obj_url' 값을 추출합니다
-    phone, FILE_NAME = data['phone']  # 'phone' 값을 추출합니다
-
     try:
-        response = requests.get(obj_url)  # obj_url에서 파일을 다운로드합니다
-        response.raise_for_status()  # 요청이 실패하면 예외를 발생시킵니다
-    except requests.exceptions.RequestException as e:
-        return jsonify({'error': 'Failed to download file'}), 400
+        data = request.get_json()  # JSON 데이터를 받습니다
 
-    filename = f"{phone}.obj"  # 'phone' 값을 파일명으로 사용합니다
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)  # 파일 경로를 생성합니다
+        if 'obj_url' not in data or 'phone' not in data:  # JSON 데이터에 'obj_url'이나 'phone'이 없으면 에러 메시지를 반환합니다
+            return jsonify({'error': 'failed : no url or phone'}), 400
 
-    with open(file_path, 'wb') as file:
-        file.write(response.content)  # 다운로드한 파일을 저장합니다
-    
-    file_queue.put((FILE_NAME, phone))  # 파일 처리 대기열에 추가
-    
-    return jsonify({'message': 'success'}), 200  # 파일이 성공적으로 다운로드되고 저장되었음을 반환합니다
+        obj_url = data['obj_url']  # 'obj_url' 값을 추출합니다
+        phone = data['phone']  # 'phone' 값을 추출합니다
+        FILE_NAME = phone  # FILE_NAME을 phone 값으로 설정합니다
+
+        try:
+            response = requests.get(obj_url)  # obj_url에서 파일을 다운로드합니다
+            response.raise_for_status()  # 요청이 실패하면 예외를 발생시킵니다
+        except requests.exceptions.RequestException as e:
+            return jsonify({'error': 'Failed to download file'}), 400
+
+        filename = f"{phone}.obj"  # 'phone' 값을 파일명으로 사용합니다
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)  # 파일 경로를 생성합니다
+
+        with open(file_path, 'wb') as file:
+            file.write(response.content)  # 다운로드한 파일을 저장합니다
+
+        file_queue.put((FILE_NAME, phone))  # 파일 처리 대기열에 추가
+
+        return jsonify({'message': 'success'}), 200  # 파일이 성공적으로 다운로드되고 저장되었음을 반환합니다
+
+    except Exception as e:
+        print(f"Error in upload_file: {str(e)}")  # 오류 메시지를 출력합니다
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 if __name__ == '__main__':  # app.py가 직접 실행될 때만 실행됩니다
     p = Process(target=process_file)
