@@ -67,7 +67,7 @@ def send_print_finished_request():
     else:
         print(f'출력 완료 요청을 전송하는 중 오류가 발생했습니다: {response.status_code}')
 
-#! 함수 실행 부분 (가급적 main.py에서 사용해주세요)
+#! 함수 실행 부분 (가급적 app.py에서 사용해주세요)
 def print_Gcode(filename):
     # G-code 파일을 업로드합니다.
     upload_gcode_file(filename)

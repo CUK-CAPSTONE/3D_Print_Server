@@ -15,7 +15,7 @@ def upload_file():
     data = request.get_json()  # JSON 데이터를 받습니다
 
     if 'obj_url' not in data or 'phone' not in data:  # JSON 데이터에 'obj_url'이나 'phone'이 없으면 에러 메시지를 반환합니다
-        return jsonify({'error': 'Missing required fields'}), 400
+        return jsonify({'error': 'failed : no url or phone'}), 400
 
     obj_url = data['obj_url']  # 'obj_url' 값을 추출합니다
     phone , FILE_NAME = data['phone']  # 'phone' 값을 추출합니다
