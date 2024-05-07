@@ -15,12 +15,12 @@ def upload_file():
     try:
         data = request.get_json()  # JSON 데이터를 받습니다
 
-        if 'obj_url' not in data or 'phone' not in data:  # JSON 데이터에 'obj_url'이나 'phone'이 없으면 에러 메시지를 반환합니다
-            return jsonify({'error': 'failed : no url or phone'}), 400
+        if 'obj_url' not in data or 'payment_id' not in data:  # JSON 데이터에 'obj_url'이나 'payment_id'가 없으면 에러 메시지를 반환합니다
+            return jsonify({'error': 'failed : no url or payment_id'}), 400
 
         obj_url = data['obj_url']  # 'obj_url' 값을 추출합니다
-        phone = data['phone']  # 'phone' 값을 추출합니다
-        FILE_NAME = phone  # FILE_NAME을 phone 값으로 설정합니다
+        payment_id = data['payment_id']  # 'payment_id' 값을 추출합니다
+        FILE_NAME = str(payment_id)  # FILE_NAME을 payment_id 값으로 설정합니다 (문자열로 변환)
 
         try:
             response = requests.get(obj_url)  # obj_url에서 파일을 다운로드합니다
@@ -28,7 +28,7 @@ def upload_file():
         except requests.exceptions.RequestException as e:
             return jsonify({'error': 'Failed to download file'}), 400
 
-        filename = f"{phone}.obj"  # 'phone' 값을 파일명으로 사용합니다
+        filename = f"{payment_id}.obj"  # 'payment_id' 값을 파일명으로 사용합니다
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)  # 파일 경로를 생성합니다
 
         with open(file_path, 'wb') as file:
@@ -46,9 +46,3 @@ def upload_file():
 
 if __name__ == '__main__':  # app.py가 직접 실행될 때만 실행됩니다
     app.run(host='0.0.0.0', port=5831)  # 서버를 실행합니다. 내부 포트는 5831로 설정합니다
-
-#! 이제 외부 네트워크에서 아래 명령어로 파일을 업로드할 수 있습니다
-#! 공유기의 포트포워딩은 공인아이피:5000 -> 내부아이피:5831 로 해줘야합니다
-#~ <경로>와 <파일 이름>을 자신의 환경에 맞게 수정해주세요
-#~ curl -X POST -H "Content-Type: application/json" -d '{"obj_url": "<파일 URL>", "phone": "<전화번호>"}' http://175.114.206.21:5000/upload
-#~ curl -X POST -H "Content-Type: application/json" -d '{"obj_url": "https://assets.meshy.ai/email%7C660571d38342c8c30c45cb3f/tasks/018e854f-88a3-75c1-8f58-da8dba6f06c2/output/model.obj?Expires=4865184000&Signature=cbR3-d~87fFF9jGozhVbBpOAY3EQSmkplozkDE~VcNHx4994L2Cf-yMp3TfIfmv4lOg9U5jb6gWmUAkJ6YD2lqIzIvaA5hEx3jMQPU5kc3aK~TXnhGVTjS846iC79lrPZvVRMDW65JaSN4aS7BW-LeBTyIS~SJKdyOb9Vyedz57ycVave6OxLf-1vyIEEf3cW~OuUVHszGb18PyFbFx0ObfIJO53shjJLP1P0lbWUHxDxDlbXKS4~0i-skROZ7rPBMc5oqCQVeC1joYmXHIv4lzQIwZC3illhFcI7hU8V-05Rsz7t5LRP7eSkRQweQUaqLsi3izZw5Z4lPZ4w2Zl2Q__&Key-Pair-Id=KL5I0C8H7HX83", "phone": "01050565831"}' http://175.114.206.21:5000/upload
