@@ -13,7 +13,7 @@ curl -X POST -F file=@<경로>/<파일 이름>.obj http://175.114.206.21:5000/up
 
 ### obj to gcode 사용법
 
-해당 내용은 ```./src/obj2gcode.sh``` 에 구현되어있음.
+해당 내용은 ```./src/function/obj2gcode.sh``` 에 구현되어있음.
 
 기본적으로 slicsr 설치되어있어야함
 ```bahs
